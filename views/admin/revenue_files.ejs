@@ -1,0 +1,47 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/user.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body>
+<%- include('../includes/manager_navigation.ejs') %>
+<script>
+    var lis = <%- JSON.stringify(reqs) %>;
+    var mode = <%- JSON.stringify(mode) %>;
+    // console.log(lis,mode);
+</script>
+<main>
+
+    
+    <div id = 'mydiv' class="container" data-city=<%= l2 %> data-pop=<%= l1 %> >
+        <h5> Showing data from <%= d1 %> to <%= d2 %></h5><br>
+        <h5> X-Axis - <% if(mode=="day") { %> Day No <% } else if(mode=="week") { %> Week No <% } else if(mode=="month") { %> Month No <% } else if(mode=="year") { %> Year No <% } %></h5><br>
+        <h5> Y-Axis - <% if(mode=="day") { %> Daily <% } else if(mode=="week") { %> Weekly <% } else if(mode=="month") { %> Monthly <% } else if(mode=="year") { %> Yearly <% } %> Revenue</h5>
+        <canvas id = "mychart">
+        </canvas>
+    </div>
+    <script>
+        var getcity = document.getElementById('mydiv').dataset.city;
+        var getpop = document.getElementById('mydiv').dataset.pop;
+        let mychart = document.getElementById('mychart').getContext('2d');
+        // console.log(getcity);
+        let barchart = new Chart(mychart, {
+            type : 'line', //bar, horizantal, pie, line
+            data : {
+                labels : getcity.split(','),
+                datasets : [{
+                    // label : 'hello',
+                    label : '<% if(mode=="day") { %> Day No <% } else if(mode=="week") { %> Week No <% } else if(mode=="month") { %> Month No <% } else if(mode=="year") { %> Year No <% } %>',
+                    backgroundColor : 'rgb(54, 162, 235)',
+                    data : getpop.split(','),
+                    fill: false, // shadow below the line
+                    borderColor: 'rgb(54, 162, 235)',
+                    tension: 0.5 // curvature of line i.e. interpolation
+                }]
+            },
+        });
+    </script>
+    
+    
+</main>
+<!-- <%- include('../includes/end.ejs') %> -->
