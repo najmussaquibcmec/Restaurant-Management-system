@@ -1,0 +1,344 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/user.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+
+<body>
+
+    <script>
+        var lis = [];
+
+        var lis2 = <%- JSON.stringify(top_items) %>;
+        var lis3 = <%- JSON.stringify(pop_items) %>;
+        console.log(lis2);
+        console.log(lis3);
+        
+        function fun(i){
+            
+            lis.push(i);
+            var b = document.getElementById("button_cart_add_" + i);
+            b.innerHTML = "Added to Cart";
+            b.disabled = 'true';
+            var l = document.getElementById("cart_form");
+            console.log(lis,typeof(lis));
+            l.value = lis;
+        }
+
+        function filterFunc() {
+            var input, filter, ul, li, a, i;
+            input = document.getElementById("user_search");
+            filter = input.value.toUpperCase();
+            div = document.getElementById("main_container");
+            a = div.getElementsByClassName("card");
+            
+            for (i = 0; i < a.length; i++) {
+                b = a[i].getElementsByClassName("Item_Name");
+                
+                b = b[0];
+                txtValue = b.textContent || b.innerText;
+                
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                a[i].style.display = "";
+                } else {
+                a[i].style.display = "none";
+                }
+            }
+        } 
+        function filterTagFunc(search_key) {
+            var input, filter, ul, li, a, i;
+            
+            filter = search_key.toUpperCase();
+            div = document.getElementById("main_container");
+            a = div.getElementsByClassName("card");
+            
+            for (i = 0; i < a.length; i++) {
+                ab = a[i].getElementsByClassName("Tag_name");
+                
+                a[i].style.display = "none";
+
+                for (j = 0; j < ab.length; j++) {
+                    
+                    b = ab[j];
+                    console.log(b);
+                    txtValue = b.innerText.trim();
+                    txtsplit = txtValue.toUpperCase().split(",");
+                    var ind = txtsplit.indexOf("");
+                    if (ind > -1){
+                        txtsplit.splice(ind, 1);
+                    }
+                    if (txtsplit.includes( filter )){
+                        console.log("INCLUSION-----------------");
+                        a[i].style.display = "";
+                    }
+                    // if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    // a[i].style.display = "";
+                    // } else {
+                    // a[i].style.display = "none";
+                    // }    
+                }
+                
+            }
+        }
+    </script>
+<%- include('../includes/user_navigation.ejs') %>
+
+<main>
+    <div class="container">
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8">
+                <input type="text" class = "form-control" id="user_search" placeholder="Search your Favourite Dish" onkeyup="filterFunc()"><br>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" onclick='filterTagFunc(<%= JSON.stringify("maincourse") %>)'>Main Course</a></li>
+                        <li class="page-item"><a class="page-link" onclick='filterTagFunc(<%= JSON.stringify("snack") %>)'>Starters</a></li>
+                        <li class="page-item"><a class="page-link" onclick='filterTagFunc(<%= JSON.stringify("dessert") %>)'>Dessert</a></li>
+                        <li class="page-item"><a class="page-link" onclick='filterTagFunc(<%= JSON.stringify("sweet") %>)'>Sweet</a></li>
+                        <li class="page-item"><a class="page-link" onclick='filterTagFunc(<%= JSON.stringify("nonveg") %>)'>Non Vegetarian</a></li>
+                        <li class="page-item"><a class="page-link" onclick='filterTagFunc(<%= JSON.stringify("vegetarian") %>)'>Vegetarian</a></li>
+                        <li class="page-item"><a class="page-link" onclick='filterTagFunc(<%= JSON.stringify("spicy") %>)'>Spicy</a></li>
+                    </ul>
+                    </nav>
+            </div>
+            <div class="col-2"></div>
+        </div>
+        
+        <div class="column2">
+            <div class="container justify-content-center" id="main_container">
+                <div style="text-align: center;">
+                    <form method="post" action="/user/home">
+                        <input type="hidden" id="cart_form" value="" name="cart_items">
+                        <button type="submit" class="btn btn-outline-success" aria-placeholder="click here">Go to Cart</button>
+                        <small class="form-text text-muted">After adding items click here to add all items to cart</small>
+                    </form>
+                </div>
+                <br>
+                <center><h4>TOP SELLERS</h4><br></center>
+                <% for(var i=0,j=1; i < pop_items.length-1, j < pop_items.length; i += 2, j += 2) { %> 
+                    <div class="row">
+                        <!-- <div class="col-lg-6 mb-4"> -->
+                            <div class="card" style="width: 32rem; height: 32rem;">
+                                <center>
+                                    <img class="card-img-left" src="/images/pizza.jpg" alt="Card image cap" style="height: 7.9cm; width: 28rem;">
+                                </center>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-7">
+                                            <h4>
+                                                <div class="Item_Name">
+                                                    <%= pop_items[i].name %>
+                                                </div>
+                                            </h4>
+                                            <h5>Price: <%= pop_items[i].price %></h5>
+                                            <div style="display: none;">
+                                                <% pop_items[i].tag.forEach(element => { %>
+                                                    <h5 class="Tag_name"> <%= element %>, </h5>
+                                                <% }) %>
+                                                <h5><%= pop_items[i].tag %></h5>
+                                            </div>
+                                            
+                                            <h5>Rating: <%= pop_items[i].rating %></h5>
+        
+                                        </div>
+                                        <div class="col-5">
+                                                <br>
+                                            <button type="button" class="btn btn-outline-success" onclick="fun(<%= pop_items[i].id %>)" id="button_cart_add_<%= pop_items[i].id %>">Add to Cart</button>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+               
+                            <div class="card" style="width: 32rem; height: 32rem;">
+                                <center>
+                                    <img class="card-img-left" src="/images/right_pizza.jpg" alt="Card Right image cap" style="height: 7.9cm; width: 28rem;">
+                                </center>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-7">
+                                            <h4>
+                                                <div class="Item_Name">
+                                                    <%= pop_items[j].name %>
+                                                </div>
+                                            </h4>
+                                            <h5>Price: <%= pop_items[j].price %></h5>
+                                            <div style="display: none;">
+                                                <% pop_items[i].tag.forEach(element => { %>
+                                                    <h5 class="Tag_name"> <%= element %>, </h5>
+                                                <% }) %>
+                                                <h5><%= pop_items[i].tag %></h5>
+                                            </div>
+                                            <h5>Rating: <%= pop_items[j].rating %></h5>
+        
+                                        </div>
+                                        <div class="col-5">
+                                                <br>
+                                            <button type="button" class="btn btn-outline-success" onclick="fun(<%= pop_items[j].id %>)" id="button_cart_add_<%= pop_items[j].id %>">Add to Cart</button>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+        
+                        <!-- </div> -->
+                    </div>
+                    <% } %>
+
+
+                    <br>
+                    <center><h4>TRENDING ITEMS</h4><br></center>
+                    <% for(var i=0,j=1; i < top_items.length-1, j < top_items.length; i += 2, j += 2) { %> 
+                        <div class="row">
+                            <!-- <div class="col-lg-6 mb-4"> -->
+                                <div class="card" style="width: 32rem; height: 32rem;">
+                                    <center>
+                                        <img class="card-img-left" src="/images/pizza.jpg" alt="Card image cap" style="height: 7.9cm; width: 28rem;">
+                                    </center>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-7">
+                                                <h4>
+                                                    <div class="Item_Name">
+                                                        <%= top_items[i].name %>
+                                                    </div>
+                                                </h4>
+                                                <h5>Price: <%= top_items[i].price %></h5>
+                                                <div style="display: none;">
+                                                    <% top_items[i].tag.forEach(element => { %>
+                                                        <h5 class="Tag_name"> <%= element %>, </h5>
+                                                    <% }) %>
+                                                    <h5><%= top_items[i].tag %></h5>
+                                                </div>
+                                                
+                                                <h5>Rating: <%= top_items[i].rating %></h5>
+            
+                                            </div>
+                                            <div class="col-5">
+                                                    <br>
+                                                <button type="button" class="btn btn-outline-success" onclick="fun(<%= top_items[i].id %>)" id="button_cart_add_<%= top_items[i].id %>">Add to Cart</button>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                   
+                                <div class="card" style="width: 32rem; height: 32rem;">
+                                    <center>
+                                        <img class="card-img-left" src="/images/right_pizza.jpg" alt="Card Right image cap" style="height: 7.9cm; width: 28rem;">
+                                    </center>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-7">
+                                                <h4>
+                                                    <div class="Item_Name">
+                                                        <%= top_items[j].name %>
+                                                    </div>
+                                                </h4>
+                                                <h5>Price: <%= top_items[j].price %></h5>
+                                                <div style="display: none;">
+                                                    <% top_items[i].tag.forEach(element => { %>
+                                                        <h5 class="Tag_name"> <%= element %>, </h5>
+                                                    <% }) %>
+                                                    <h5><%= top_items[i].tag %></h5>
+                                                </div>
+                                                <h5>Rating: <%= top_items[j].rating %></h5>
+            
+                                            </div>
+                                            <div class="col-5">
+                                                    <br>
+                                                <button type="button" class="btn btn-outline-success" onclick="fun(<%= top_items[j].id %>)" id="button_cart_add_<%= top_items[j].id %>">Add to Cart</button>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+            
+                            <!-- </div> -->
+                        </div>
+                        <% } %>
+
+                        <br>
+                        <center><h4>OUR MENU</h4><br></center>
+                
+            <% for(var i=0,j=1; i < menu_items.length-1, j < menu_items.length; i += 2, j += 2) { %> 
+            <div class="row">
+                <!-- <div class="col-lg-6 mb-4"> -->
+                    <div class="card" style="width: 32rem; height: 32rem;">
+                        <center>
+                            <img class="card-img-left" src="/images/pizza.jpg" alt="Card image cap" style="height: 7.9cm; width: 28rem;">
+                        </center>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-7">
+                                    <h4>
+                                        <div class="Item_Name">
+                                            <%= menu_items[i].name %>
+                                        </div>
+                                    </h4>
+                                    <h5>Price: <%= menu_items[i].price %></h5>
+                                    <div style="display: none;">
+                                        <% menu_items[i].tag.forEach(element => { %>
+                                            <h5 class="Tag_name"> <%= element %>, </h5>
+                                        <% }) %>
+                                        <h5><%= menu_items[i].tag %></h5>
+                                    </div>
+                                    
+                                    <h5>Rating: <%= menu_items[i].rating %></h5>
+
+                                    <p class="card-text"> <%= menu_items[i].desc %></p>
+                                </div>
+                                <div class="col-5">
+                                        <br>
+                                    <button type="button" class="btn btn-outline-success" onclick="fun(<%= menu_items[i].id %>)" id="button_cart_add_<%= menu_items[i].id %>">Add to Cart</button>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                <!-- </div> -->
+                    <!-- <div class="col-2"></div> -->
+                <!-- <div class="col-lg-6 mb-4"> -->
+                    <div class="card" style="width: 32rem; height: 32rem;">
+                        <center>
+                            <img class="card-img-left" src="/images/right_pizza.jpg" alt="Card Right image cap" style="height: 7.9cm; width: 28rem;">
+                        </center>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-7">
+                                    <h4>
+                                        <div class="Item_Name">
+                                            <%= menu_items[j].name %>
+                                        </div>
+                                    </h4>
+                                    <h5>Price: <%= menu_items[j].price %></h5>
+                                    <div style="display: none;">
+                                        <% menu_items[i].tag.forEach(element => { %>
+                                            <h5 class="Tag_name"> <%= element %>, </h5>
+                                        <% }) %>
+                                        <h5><%= menu_items[i].tag %></h5>
+                                    </div>
+                                    <h5>Rating: <%= menu_items[j].rating %></h5>
+
+                                    <p class="card-text"> <%= menu_items[i].desc %></p>
+                                </div>
+                                <div class="col-5">
+                                        <br>
+                                    <button type="button" class="btn btn-outline-success" onclick="fun(<%= menu_items[j].id %>)" id="button_cart_add_<%= menu_items[j].id %>">Add to Cart</button>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                <!-- </div> -->
+            </div>
+            <% } %>
+        </div>
+
+    </div>
+    </div>
+    
+    
+</main>
+<%- include('../includes/end.ejs') %>
