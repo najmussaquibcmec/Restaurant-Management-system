@@ -1,0 +1,41 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/user.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body>
+<%- include('../includes/manager_navigation.ejs') %>
+<script>
+    var lis = <%- JSON.stringify(reqs) %>;
+    console.log(lis);
+</script>
+<main>
+<div class="container">
+    <h5> Showing data from <%= d1 %> to <%= d2 %></h5><br>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Item ID</th>
+            <th scope="col"><% if(mode=="day") { %> Day No <% } else if(mode=="week") { %> Week No <% } else if(mode=="month") { %> Month No <% } else if(mode=="year") { %> Year No <% } %></h5><br></th>
+            <th scope="col">No of Times Ordered</th>
+            <th scope="col">Total Revenue</th>
+          </tr>
+        </thead>
+        <tbody>
+            <% for(var i=0;i < reqs.length; i++) { %>
+                <tr>
+                    <th scope="row"> <%= i+1 %></th>
+                    <td> <%= reqs[i].ids %></td>
+                    <td> <%= reqs[i].times %></td>
+                    <td> <%= reqs[i].quans %></td>
+                    <td> <%= reqs[i].turnovers %></td>
+                  </tr>
+            <% } %>
+        </tbody>
+      </table>
+</div>
+    
+    
+</main>
+<%- include('../includes/end.ejs') %>
