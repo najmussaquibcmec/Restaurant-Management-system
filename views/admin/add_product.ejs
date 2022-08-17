@@ -1,0 +1,58 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/forms.css">
+<link rel="stylesheet" href="/css/product.css">
+</head>
+
+<body>
+<%- include('../includes/navigation.ejs') %>
+
+<main>
+    <form class="product-form" action="http://localhost:3000/admin/add-product" method="POST">
+        <div class="form-control">
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title" value="<% if (editing) { %><%= product.title %><% } %>">
+        </div>
+        <div class="form-control">
+            <label for="image">Image</label>
+            <input type="text" name="image" id="image" value="<% if (editing) { %><%= product.image %><% } %>">
+        </div>
+        <div class="form-control">
+            <label for="price">Price</label>
+            <input type="number" name="price" id="price" step="0.01" value="<% if (editing) { %><%= product.price %><% } %>">
+        </div>
+        <div class="form-control">
+            <label for="price">Quantity</label>
+            <input type="number" name="quantity" id="quantity"  value="<% if (editing) { %><%= product.quantity %><% } %>">
+        </div>
+        <% if (editing) { %>
+            <input type="hidden" value="<%= product.id %>" name="productId">
+        <% } %>
+
+    <button class="btn" type="submit"><% if (editing) { %>Update Product<% } else { %>Add Product<% } %></button>
+    </form>
+    <div id = 'mydiv' class="container" data-city=<%= cities %> data-pop=<%= pops %> >
+        <canvas id = "mychart">
+
+        </canvas>
+    </div>
+    <script>
+        var getcity = document.getElementById('mydiv').dataset.city;
+        var getpop = document.getElementById('mydiv').dataset.pop;
+        let mychart = document.getElementById('mychart').getContext('2d');
+        let barchart = new Chart(mychart, {
+            type : 'line', //bar, horizantal, pie, line
+            data : {
+                labels : getcity.split(','),
+                datasets : [{
+                    label : 'population',
+                    backgroundColor : 'rgb(54, 162, 235)',
+                    data : getpop.split(','),
+                    fill: false, // shadow below the line
+                    borderColor: 'rgb(54, 162, 235)',
+                    tension: 0 // curvature of line i.e. interpolation
+                }]
+            },
+        });
+    </script>
+</main>
+<%- include('../includes/end.ejs') %>
