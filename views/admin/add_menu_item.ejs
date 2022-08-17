@@ -1,0 +1,49 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/user.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<!-- <script src="//ej2.syncfusion.com/javascript/demos/samples/dropdownlist/filtering/datasource.js" type="text/javascript"></script>
+<script src="//cdn.syncfusion.com/ej2/dist/ej2.min.js" type="text/javascript"></script> -->
+</head>
+
+<body>
+    
+<%- include('../includes/manager_navigation.ejs') %>
+
+<main>
+    <div class="container">
+        <div class="column2">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col-8">
+                        
+                          <form action="/manager/add_menu_item" method="post">
+                            <div class="form-group">
+                                <label for="phone">Item Name: </label>
+                                <input type="text" class="form-control" name="name" placeholder="Enter the item name" id="name_input">
+                            </div>
+                            <div class="form-group">
+                              <label for="phone">Price</label>
+                              <input type="number" min="1" class="form-control" name="price" placeholder="Enter quantity" id="price_input">
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Tags: </label>
+                                <input type="text" class="form-control" name="tag" placeholder="comma separated" id="tag_input">
+                            </div>
+
+                            <div style="align-items: center;text-align: center;">
+                                <button type="submit" class="btn btn-primary" style="align-items: center;">Add</button>
+                            </div>
+                          </form>
+                            
+                        </div>
+                        <br>
+                        <div class="col-2"></div>
+                    </div>
+            </div>
+
+        </div> 
+    </div>
+    
+</main>
+<!-- <%- include('../includes/end.ejs') %> -->
