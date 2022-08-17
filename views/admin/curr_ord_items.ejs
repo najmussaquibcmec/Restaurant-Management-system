@@ -1,0 +1,47 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/user.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+
+<body>
+<script>
+    var car_items =  <%- JSON.stringify(items) %>;
+    console.log(car_items);
+
+    function fun(x) {
+        console.log(x);
+        var a = document.getElementById("order_num");
+            a.value = x;
+        }
+</script>
+<%- include('../includes/user_navigation.ejs') %>
+
+<main>
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <ul>
+                        <% for(var i=0; i < items.length; i+=1) { %>
+                            <li class="list-group-item">Item Name : <%= items[i].name %></li>
+                            <li class="list-group-item">Quantity : <%= items[i].quan %></li>
+                            <li class="list-group-item">Price : <%= items[i].price1 %></li>
+                        <% } %>
+                        
+                    </ul>
+                </ul>
+            </div>
+            <form action="/user/curr_order_items" method="POST">
+                <center>
+                    <button type="submit" class="btn btn-outline-success" onclick="fun(<%= order_no %>)">Delivery Received</button>
+                </center>
+                <input name="order_num" id = "order_num" value="" hidden>
+                <br>
+              </form>
+            </div>
+    </div>
+    
+    
+</main>
+<%- include('../includes/end.ejs') %>
