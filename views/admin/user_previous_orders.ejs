@@ -1,0 +1,58 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/user.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+
+<body>
+<%- include('../includes/user_navigation.ejs') %>
+<script>
+    var prev_orders =  <%- JSON.stringify(orders_now) %>;
+    console.log(prev_orders);
+
+    function fun(x,i) {
+        console.log(x);
+        var a = document.getElementById("order_no_"+i);
+            a.value = x;
+        }
+</script>
+<main>
+    <div class="container">
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8">
+                <% for(var i=0; i < orders_now.length; i += 1) { %> 
+
+                <div class="card">
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Order No: #<%= orders_now[i].order_no %></li>
+                            <li class="list-group-item">Customer ID: <%= orders_now[i].customer_id %></li>
+                            <li class="list-group-item">Customer Name: <%= orders_now[i].cust_name %></li>
+                            <li class="list-group-item">Customer Phone No: <%= orders_now[i].phone %></li>
+                            <li class="list-group-item">Customer Address: <%= orders_now[i].addr %></li>
+                            <li class="list-group-item">TimeStamp: <%= orders_now[i].time_stamp.toLocaleString() %></li>
+                            <li class="list-group-item">Bill: <%= orders_now[i].bill %>/-</li>
+                        
+                            <li class="list-group-item">Delivery Status : Completed</li>
+                        </ul>
+
+                        <form method="post" action="/user/prev_ords">
+                              <input type="hidden" id="order_no_<%= i %>" value="" name="order_no">
+                              <button type="submit" class="btn btn-success" style="float: right;" onclick="fun(<%= orders_now[i].order_no %>,<%= i %>)">Expand</button>                              
+                          </form>
+                    </div>
+                    
+                    </div>
+                    <br>
+                <% } %>
+                
+            </div>
+            <div class="col-2"></div>
+            
+        </div>
+    </div>
+    
+    
+</main>
+<%- include('../includes/end.ejs') %>
