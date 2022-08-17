@@ -1,7 +1,5 @@
 
 # Restaurant Management System
-
-- Developed a web application using NodeJS as framework and postgresql as database for a restaurant owner to manage kitchen resources, staff, deliveries, menu. 
-- Main emphasis is on efficient table creation, maintaining normal forms across all relations and creating multiple roles to handle queries.
-- Triggers and Indices are used for optimization of database queries
-- Designed features like accepting online orders, table bookings, managing menu and revenue analytics.
+- Implemented a typical internal site for restaurants using NodeJs and PSQL for database management. Created different user roles and implemented different use cases specific to each role.
+- Maintained in detail information like quantities of ingredients and feedback of customers. Used sequences and triggers to automate the processes and used indices to speedup the querying.
+- used auto-refresh to get the lively updates for web pages and used different node modules like password and bcrypt for authentication.
