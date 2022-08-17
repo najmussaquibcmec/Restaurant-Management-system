@@ -1,0 +1,110 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/user.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+
+<body>
+<script>
+    var car_items =  <%- JSON.stringify(items) %>;
+    console.log(car_items);
+
+    var item_list = [];
+    var ratings = [];
+    var skips = [];
+    car_items.forEach(elem => {
+        console.log(elem.id, elem.price);
+        item_list.push(elem.id);
+        skips.push(0);
+        ratings.push(elem.rating1);
+    });
+
+    function fun(x, idx){
+        console.log("x, idx : ", x, idx);
+        var b = document.getElementById("skip_button_" + x);
+        if (b.innerHTML === 'Skip'){
+            b.innerHTML = 'Skipped';
+            skips[idx] = 1;
+        }
+        else{
+            b.innerHTML = 'Skip';
+            skips[idx] = 0;
+        }
+        var p = document.getElementById("item_list_field");
+        var q = document.getElementById("ratings_field");
+        var r = document.getElementById("skips_field");
+        p.value = item_list;
+        q.value = ratings;
+        r.value = skips;
+
+        console.log(item_list);
+        console.log(ratings);
+        console.log(skips);
+    }
+
+    function test_fun(x, y){
+        ratings[x] = parseInt(y);
+        
+        var p = document.getElementById("item_list_field");
+        var q = document.getElementById("ratings_field");
+        var r = document.getElementById("skips_field");
+        p.value = item_list;
+        q.value = ratings;
+        r.value = skips;
+
+        console.log(item_list);
+        console.log(ratings);
+        console.log(skips);
+    }
+
+</script>
+<%- include('../includes/user_navigation.ejs') %>
+
+<main>
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <h5>Order ID : # <%= order_no %> </h5>
+                    <ul>
+                        <% for(var i=0; i < items.length; i+=1) { %>
+                            <div class="row">
+                                <div class="col">
+                                    <li class="list-group-item">Item Name : <%= items[i].name %></li>
+                                </div>
+                                <div class="col">
+                                    <input type="number" class="form-control-range" min="1" max="5" value="5" style="width: 30%;" 
+                                                onchange="test_fun(<%= i %>, this.value)">
+                                </div>
+                                <div class="col">
+                                    <button type="button" class="btn btn-outline-success" onclick="fun(<%= items[i].id %>, <%= i %>)" id="skip_button_<%= items[i].id %>">Skip</button>
+                                </div>
+
+                            </div>
+                            <!-- <li class="list-group-item">Quantity : <%= items[i].quan %></li> -->
+                            <!-- <li class="list-group-item">Price : <%= items[i].price1 %></li> -->
+                        <% } %>
+                        
+                    </ul>
+                    <li class="list-group-item">Delivery Status : Completed</li>
+                </ul>
+            </div>
+            <form action="/user/order_items" method="POST">
+                Delivery Service Rating :
+                <input type="number" value="0" min="0" max="5">
+                <input name="id" value="1" hidden>
+
+                <input type="hidden" id="order_input" name="order_num" value=<%= order_no %>>
+                <input type="hidden" id="item_list_field" name="item_list" value="">
+                <input type="hidden" id="ratings_field" name="ratings" value="">
+                <input type="hidden" id="skips_field" name="skips" value="">
+                <input type="hidden" name="comments" value="">
+                
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+            </div>
+    </div>
+    
+    
+</main>
+<%- include('../includes/end.ejs') %>
