@@ -1,0 +1,41 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/user.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+
+<body>
+<%- include('../includes/user_navigation.ejs') %>
+
+<main>
+    <div class="container">
+        <form method="post" action="/user/table_booking">
+            
+              <div class="form-group">
+                <label for="inputText">Name</label>
+                <input type="text" class="form-control" id="inputText" placeholder="Ulfa" disabled>
+              </div>
+              <div class="form-group">
+                <label for="inputDate">Date</label>
+                <input type="date" name="date" class="form-control" id="inputDate">
+              </div>
+              <div class="form-group">
+                <label for="inputTime">Start Hr : (from 9:00 to 18:00) </label>
+                <input type="number" name="start_hr" class="form-control" id="inputNumber" min="9" max="18" value="9">
+              </div>
+              <div class="form-group">
+                <label for="inputTime">No.of Hrs :</label>
+                <input type="number" name="num_hr" class="form-control" id="inputNumber" min="1" max="3" value="1">
+              </div>
+              <div class="form-group">
+                <label for="inputNumber">No of Persons</label>
+                <input type="number" name="count" class="form-control" id="inputNumber" min="1" max="50" value="1">
+              </div>
+            
+            <button type="submit" class="btn btn-primary">Book Table</button>
+          </form>  
+    </div>
+    
+    
+</main>
+<%- include('../includes/end.ejs') %>
