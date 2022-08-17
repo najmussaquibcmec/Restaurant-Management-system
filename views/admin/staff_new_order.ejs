@@ -1,0 +1,120 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/user.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <script>
+        var items_ordered1 = [];
+        console.log("items_ordered1\n");
+        // console.log(items_ordered1);
+        function onClickDelete(id_object){
+            // document.getElementById('myText').value=id;
+            console.log(id_object['id']);
+            console.log(items_ordered1);
+            items_ordered1.push({'name': 'Pizza', 'quantity': 1});
+            console.log("before splicing", id_object['items']);
+            // id_object['items'].splice(id_object['id'], 1);
+            console.log("after splicing", id_object['items']);
+        }
+
+    </script>
+<%- include('../includes/kitchen_manager_navigation.ejs') %>
+
+<main>
+    <div class="container">
+        <div class="column2">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col-8">
+                            <form action="#" method="post" class="form-signin">
+                                <div class="form-group">
+                                  <label for="name">Customer Name</label>
+                                  <input type="text" class="form-control" name="name" placeholder="Enter name">
+                                </div>
+                                <div class="form-group">
+                                  <label for="addr">Address</label>
+                                  <input type="text" class="form-control" name="addr" placeholder="Enter address">
+                                </div>
+                                <div class="form-group">
+                                  <label for="phone">Phone Number</label>
+                                  <input type="number" min="0" class="form-control" name="phone" placeholder="Enter phone no.">
+                                </div>
+                                <!-- <div class="form-group">
+                                  <label for="name">Message</label>
+                                  <textarea type="text" class="form-control" name="message" placeholder="Enter message"></textarea>
+                                </div> -->
+                                <p>items_ordered length : <%= items_ordered.length %></p>
+                                <!-- <div class="card"> -->
+                                    <% for(var i=0; i < items_ordered.length; i++) { %>
+                                        <div class="row">
+                                            <div class="col">
+                                                Item Name: <%= items_ordered[i].name %> <br>
+                                            </div>
+                                            <div class="col">
+                                                Quantity: <%= items_ordered[i].quantity %>
+                                            </div>
+                                            <!-- <button onclick="">Delete</button> -->
+                                            <!-- <input type="button" onclick="() => console.log('CLICKED\n')" value="Delete2" /> -->
+                                            <input type="button" onclick="onClickDelete(<%= JSON.stringify({'id': i, 'items': items_ordered}) %>)" value="Delete" />
+                                        </div>
+                                    <% } %>
+                                <!-- </div> -->
+                                <div style="align-items: center;text-align: center;">
+                                    <button type="submit" class="btn btn-primary" style="align-items: center;">Place Order</button>
+                                </div>
+                              </form>
+                            <div class="card">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Customer Name : ULFA</li>
+                                    <li class="list-group-item">Address : blah, blah, blah</li>
+                                    <li class="list-group-item">Phone Number : 9999999999</li>
+                                    <ul>
+                                        <% for(var j=0; j < 2; j+=1) { %>
+                                            <li class="list-group-item">Item Name : </li>
+                                            <li class="list-group-item">Quantity : </li>
+                                        <% } %>
+                                        
+                                    </ul>
+                                    <li class="list-group-item">Delivery Status : Yet to be delivered</li>
+                                </ul>
+                            </div>
+                            <br>
+                            <!-- <% for(var i=0; i < 5; i += 1) { %> 
+            
+                            <div class="card"">
+                                <ul class="list-group list-group-flush">
+                                    <div class="row">
+                                        <div class="col">
+                                            <li class="list-group-item">Order : <%= i + 1 %></li>
+                                        </div>
+                                    </div>
+                                    <li class="list-group-item">Phone Number: 9999999999</li>
+                                    <li class="list-group-item">Delivery Address : blah, blah, blah</li>
+                                    <li class="list-group-item">Customer Name : UFLA</li>
+                                    <li class="list-group-item">Other Details: </li>
+                                </ul>
+                                </div>
+                                <br>
+                            <% } %> -->
+                        </div>
+                        <br>
+                        <div class="col-2"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col-8" style="align-items: center;text-align: center;">
+                            <button type="button" class="btn btn-inline-success">Place Order</button>
+                        </div>
+                        <div class="col-2"></div>
+                    </div>
+            </div>
+
+        </div> 
+    </div>
+    
+    
+</main>
+<!-- <%- include('../includes/end.ejs') %> -->
