@@ -1,0 +1,107 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/user.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+
+<body>
+<%- include('../includes/delivery_navigation.ejs') %>
+
+<main>
+    <div class="container">
+        <div class="column2">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col-8">
+                            <% for(var i=0; i < current_orders.length; i += 1) { %> 
+            
+                            <div class="card"">
+                                <ul class="list-group list-group-flush">
+                                    <div class="row">
+                                        <div class="col">
+                                            <li class="list-group-item">Order : <%= current_orders[i].order_no %></li>
+                                        </div>
+                                        <div class="col" style="text-align: right;">
+                                            <p>Status: <%= current_orders[i].stat %></p>
+                                        </div>
+                                    </div>
+                                    <li class="list-group-item">Phone Number: <%= current_orders[i].phone %></li>
+                                    <li class="list-group-item">Delivery Address : <%= current_orders[i].addr %></li>
+                                    <li class="list-group-item">Customer Name : <%= current_orders[i].cust_name %></li>
+                                    <li class="list-group-item">Other Details: </li>
+                                </ul>
+                                <br>
+                                <form method="post" action="/delivery/current-orders">
+                                    <input type="hidden" name="order_num" value=<%= current_orders[i].order_no %>>
+                                    <div class="col" style="text-align: right;">
+                                        <button type="submit" class="btn btn-inline-success">Order delivered</button>
+                                    </div>
+                                </form>
+                                </div>
+                                <br>
+                            <% } %>
+                        </div>
+                        <div class="col-2"></div>
+                        
+                    </div>
+                <!-- <% for(var i=0; i < 5; i += 1) { %> 
+                <div class="row">
+                    <div class="col-lg-6 mb-4">
+                        <div class="card" style="width: 28rem;">
+                            <img class="card-img-left" src="/images/pizza.jpg" alt="Card image cap" style="height: 7.9cm; width: 28rem;">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                    </div>
+                                    <div class="col-5">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Quantity:</span>
+                                            </div>
+                                            <input type="number" class="form-control-range" min="0" max="10" value="0" style="width: 30%;">    
+                                            </div>
+                                            <br>
+                                        <button type="button" class="btn btn-outline-success">Add to Cart</button>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 mb-4">
+                        <div class="card" style="width: 28rem;">
+                            <img class="card-img-left" src="/images/right_pizza.jpg" alt="Card Right image cap" style="height: 7.9cm; width: 28rem;">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                    </div>
+                                    <div class="col-5">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Quantity:</span>
+                                            </div>
+                                            <input type="number" class="form-control-range" min="0" max="10" value="0" style="width: 30%;">    
+                                            </div>
+                                            <br>
+                                        <button type="button" class="btn btn-outline-success">Add to Cart</button>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <% } %> -->
+            </div>
+
+        </div> 
+    </div>
+    
+    
+</main>
+<%- include('../includes/end.ejs') %>
