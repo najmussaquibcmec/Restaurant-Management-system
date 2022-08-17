@@ -1,0 +1,45 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/user.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+
+<body>
+<%- include('../includes/delivery_navigation.ejs') %>
+
+<main>
+    <div class="container">
+        <div class="column2">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col-8">
+                            <% for(var i=0; i < past_orders.length; i += 1) { %> 
+            
+                            <div class="card"">
+                                <ul class="list-group list-group-flush">
+                                    <div class="row">
+                                        <div class="col">
+                                            <li class="list-group-item">Order : <%= past_orders[i].order_no %></li>
+                                        </div>
+                                    </div>
+                                    <li class="list-group-item">Phone Number: <%= past_orders[i].phone %></li>
+                                    <li class="list-group-item">Delivery Address : <%= past_orders[i].addr %></li>
+                                    <li class="list-group-item">Customer Name : <%= past_orders[i].cust_name %></li>
+                                    <li class="list-group-item">Other Details: </li>
+                                </ul>
+                                </div>
+                                <br>
+                            <% } %>
+                        </div>
+                        <div class="col-2"></div>
+                        
+                    </div>
+            </div>
+
+        </div> 
+    </div>
+    
+    
+</main>
+<%- include('../includes/end.ejs') %>
